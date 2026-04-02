@@ -8,6 +8,7 @@ ENV PIP=9.0.3 \
     CONFIG=base.cfg \
     ZOPE_HOME=/opt/zope
 
+# Debian
 RUN mkdir -p $ZOPE_HOME/var &&  \
     groupadd -g 500 zope-www && \
     useradd  -g 500 -u 500 -m -s /bin/bash zope-www && \
@@ -17,12 +18,20 @@ RUN mkdir -p $ZOPE_HOME/var &&  \
     sed -i '/buster-updates/d' /etc/apt/sources.list && \
     apt-get update
 
+# libxml2
 RUN wget "https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.9.tar.xz" && \
     tar xf libxml2-2.9.9.tar.xz && \
     cd libxml2-2.9.9 && \
     ./configure --with-python="/usr/local/bin/python" && \
     make && \
     make install
+
+# pip
+COPY src/zope-2.13.22-plinn-deps-installed.txt /
+
+RUN pip install -r zope-2.13.22-plinn-deps-installed.txt && \
+    pip install Products.ExtendedPathIndex==3.4.2 && \
+    pip install Pillow==6.2.2
 
 #COPY src/docker-entrypoint.sh    \
 #     src/zope-setup.sh           \
