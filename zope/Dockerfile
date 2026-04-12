@@ -33,6 +33,18 @@ RUN pip install -r zope-2.13.22-plinn-deps-installed.txt && \
     pip install Products.ExtendedPathIndex==3.4.2 && \
     pip install Pillow==6.2.2
 
+# Plinn zope products
+RUN pip install git+https://github.com/pinbe/Plinn.git@zope-2.13-egg && \
+    pip install git+https://github.com/pinbe/ckeditor.git@ckeditor4.14 && \
+    pip install git+https://github.com/pinbe/Epoz.git@master-egg && \
+    pip install git+https://github.com/pinbe/GroupUserFolder.git@zope-2.13-egg && \
+    pip install git+https://github.com/pinbe/iso_3166_1.git@master-egg && \
+    pip install git+https://github.com/pinbe/Photo.git@zope-2.12-egg && \
+    pip install git+https://github.com/pinbe/photoprint.git@zope-2.13-egg && \
+    pip install git+https://github.com/pinbe/Portfolio.git@zope-2.13-egg && \
+    pip install git+https://github.com/pinbe/Utf8Splitter.git@master-egg && \
+    pip install git+https://github.com/pinbe/ZTUtils_hotfix.git@master-egg
+
 #COPY src/docker-entrypoint.sh    \
 #     src/zope-setup.sh           \
 #     src/configure.py            \
