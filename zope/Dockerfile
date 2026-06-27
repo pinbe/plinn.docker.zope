@@ -52,7 +52,9 @@ RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.0/build.tar.xz &&
     pip install -e Photo && \
     git clone -b zope-2.13-egg https://github.com/pinbe/photoprint.git && \
     pip install -e photoprint && \
-    git clone -b zope-2.13-egg https://github.com/pinbe/Portfolio.git && \
+    wget https://github.com/pinbe/Portfolio/releases/download/v0.9.0/build.tar.xz && \
+    tar xJf build.tar.xz && \
+    rm -rf build.tar.xz && \
     pip install -e Portfolio && \
     git clone -b master-egg https://github.com/pinbe/Utf8Splitter.git && \
     pip install -e Utf8Splitter && \
