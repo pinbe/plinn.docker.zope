@@ -36,7 +36,7 @@ RUN pip install -r zope-2.13.22-plinn-deps-installed.txt && \
 
 # Plinn zope products
 WORKDIR $ZOPE_HOME/src
-RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.0/build.tar.xz && \
+RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.1/build.tar.xz && \
     tar xJf build.tar.xz && \
     pip install -e Plinn && \
     rm -rf build.tar.xz && \
