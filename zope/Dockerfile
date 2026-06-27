@@ -24,7 +24,8 @@ RUN wget "https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.9.tar.xz" &
     cd libxml2-2.9.9 && \
     ./configure --with-python="/usr/local/bin/python" && \
     make && \
-    make install
+    make install && \
+    sed -i 's/encoding = "ascii"/encoding = "utf-8"/' /usr/local/lib/python2.7/site.py
 
 # pip
 COPY src/zope-2.13.22-plinn-deps-installed.txt /
@@ -34,16 +35,41 @@ RUN pip install -r zope-2.13.22-plinn-deps-installed.txt && \
     pip install Pillow==6.2.2
 
 # Plinn zope products
-RUN pip install git+https://github.com/pinbe/Plinn.git@zope-2.13-egg && \
-    pip install git+https://github.com/pinbe/ckeditor.git@ckeditor4.14 && \
-    pip install git+https://github.com/pinbe/Epoz.git@master-egg && \
-    pip install git+https://github.com/pinbe/GroupUserFolder.git@zope-2.13-egg && \
-    pip install git+https://github.com/pinbe/iso_3166_1.git@master-egg && \
-    pip install git+https://github.com/pinbe/Photo.git@zope-2.12-egg && \
-    pip install git+https://github.com/pinbe/photoprint.git@zope-2.13-egg && \
-    pip install git+https://github.com/pinbe/Portfolio.git@zope-2.13-egg && \
-    pip install git+https://github.com/pinbe/Utf8Splitter.git@master-egg && \
-    pip install git+https://github.com/pinbe/ZTUtils_hotfix.git@master-egg
+WORKDIR $ZOPE_HOME/src
+RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.0/build.tar.xz && \
+    tar xJf build.tar.xz && \
+    pip install -e Plinn && \
+    rm -rf build.tar.xz && \
+    git clone -b ckeditor4.14 https://github.com/pinbe/ckeditor.git && \
+    pip install -e ckeditor && \
+    git clone -b master-egg https://github.com/pinbe/Epoz.git && \
+    pip install -e Epoz && \
+    git clone -b zope-2.13-egg https://github.com/pinbe/GroupUserFolder.git && \
+    pip install -e GroupUserFolder && \
+    git clone -b master-egg https://github.com/pinbe/iso_3166_1.git && \
+    pip install -e iso_3166_1 && \
+    git clone -b zope-2.12-egg https://github.com/pinbe/Photo.git && \
+    pip install -e Photo && \
+    git clone -b zope-2.13-egg https://github.com/pinbe/photoprint.git && \
+    pip install -e photoprint && \
+    git clone -b zope-2.13-egg https://github.com/pinbe/Portfolio.git && \
+    pip install -e Portfolio && \
+    git clone -b master-egg https://github.com/pinbe/Utf8Splitter.git && \
+    pip install -e Utf8Splitter && \
+    git clone -b master-egg https://github.com/pinbe/ZTUtils_hotfix.git && \
+    pip install -e ZTUtils_hotfix
+
+# # Plinn zope products
+# RUN pip install git+https://github.com/pinbe/Plinn.git@zope-2.13-egg && \
+#     pip install git+https://github.com/pinbe/ckeditor.git@ckeditor4.14 && \
+#     pip install git+https://github.com/pinbe/Epoz.git@master-egg && \
+#     pip install git+https://github.com/pinbe/GroupUserFolder.git@zope-2.13-egg && \
+#     pip install git+https://github.com/pinbe/iso_3166_1.git@master-egg && \
+#     pip install git+https://github.com/pinbe/Photo.git@zope-2.12-egg && \
+#     pip install git+https://github.com/pinbe/photoprint.git@zope-2.13-egg && \
+#     pip install git+https://github.com/pinbe/Portfolio.git@zope-2.13-egg && \
+#     pip install git+https://github.com/pinbe/Utf8Splitter.git@master-egg && \
+#     pip install git+https://github.com/pinbe/ZTUtils_hotfix.git@master-egg
 
 #COPY src/docker-entrypoint.sh    \
 #     src/zope-setup.sh           \
