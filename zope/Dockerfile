@@ -16,7 +16,8 @@ RUN mkdir -p $ZOPE_HOME/var &&  \
     sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list && \
     sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list && \
     sed -i '/buster-updates/d' /etc/apt/sources.list && \
-    apt-get update
+    apt-get update && \
+    apt-get install -y exempi libexempi-dev libjpeg-progs
 
 # libxml2
 RUN wget "https://download.gnome.org/sources/libxml2/2.9/libxml2-2.9.9.tar.xz" && \
@@ -50,7 +51,9 @@ RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.1/build.tar.xz &&
     pip install -e iso_3166_1 && \
     git clone -b zope-2.12-egg https://github.com/pinbe/Photo.git && \
     pip install -e Photo && \
-    git clone -b zope-2.13-egg https://github.com/pinbe/photoprint.git && \
+    wget https://github.com/pinbe/photoprint/releases/download/v0.9.0/build.tar.xz && \
+    tar xJf build.tar.xz && \
+    rm -rf build.tar.xz && \
     pip install -e photoprint && \
     wget https://github.com/pinbe/Portfolio/releases/download/v0.9.0/build.tar.xz && \
     tar xJf build.tar.xz && \
