@@ -1,0 +1,5 @@
+#!/command/execlineb -P
+
+fdmove -c 2 1
+s6-setuidgid zope-www
+exec /opt/zope/zope_instances/plinn/bin/runzope
