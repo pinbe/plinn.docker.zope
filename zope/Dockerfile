@@ -37,7 +37,7 @@ RUN pip install -r zope-2.13.22-plinn-deps-installed.txt && \
 
 # Plinn zope products
 WORKDIR $ZOPE_HOME/src
-RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.1/build.tar.xz && \
+RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.2/build.tar.xz && \
     tar xJf build.tar.xz && \
     pip install -e Plinn && \
     rm -rf build.tar.xz && \
@@ -51,11 +51,11 @@ RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.1/build.tar.xz &&
     pip install -e iso_3166_1 && \
     git clone -b zope-2.12-egg https://github.com/pinbe/Photo.git && \
     pip install -e Photo && \
-    wget https://github.com/pinbe/photoprint/releases/download/v0.9.0/build.tar.xz && \
+    wget https://github.com/pinbe/photoprint/releases/download/v0.9.1/build.tar.xz && \
     tar xJf build.tar.xz && \
     rm -rf build.tar.xz && \
     pip install -e photoprint && \
-    wget https://github.com/pinbe/Portfolio/releases/download/v0.9.0/build.tar.xz && \
+    wget https://github.com/pinbe/Portfolio/releases/download/v0.9.1/build.tar.xz && \
     tar xJf build.tar.xz && \
     rm -rf build.tar.xz && \
     pip install -e Portfolio && \
@@ -64,17 +64,16 @@ RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.1/build.tar.xz &&
     git clone -b master-egg https://github.com/pinbe/ZTUtils_hotfix.git && \
     pip install -e ZTUtils_hotfix
 
-# # Plinn zope products
-# RUN pip install git+https://github.com/pinbe/Plinn.git@zope-2.13-egg && \
-#     pip install git+https://github.com/pinbe/ckeditor.git@ckeditor4.14 && \
-#     pip install git+https://github.com/pinbe/Epoz.git@master-egg && \
-#     pip install git+https://github.com/pinbe/GroupUserFolder.git@zope-2.13-egg && \
-#     pip install git+https://github.com/pinbe/iso_3166_1.git@master-egg && \
-#     pip install git+https://github.com/pinbe/Photo.git@zope-2.12-egg && \
-#     pip install git+https://github.com/pinbe/photoprint.git@zope-2.13-egg && \
-#     pip install git+https://github.com/pinbe/Portfolio.git@zope-2.13-egg && \
-#     pip install git+https://github.com/pinbe/Utf8Splitter.git@master-egg && \
-#     pip install git+https://github.com/pinbe/ZTUtils_hotfix.git@master-egg
+COPY src/zope.conf  \
+     src/zeo.conf \
+     src/install.sh \
+     src/docker-entrypoint.sh $ZOPE_HOME/
+
+USER zope-www
+
+RUN  cd $ZOPE_HOME && \
+     ./install.sh && \
+     rm ${ZOPE_HOME}/install.sh
 
 #COPY src/docker-entrypoint.sh    \
 #     src/zope-setup.sh           \
@@ -97,14 +96,14 @@ RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.1/build.tar.xz &&
 #    && apt-get install -y --no-install-recommends $runDeps \
 #    && rm -rf /var/lib/apt/lists/*
 #
-#EXPOSE 8080
+EXPOSE 8080
 #
-#WORKDIR $ZOPE_HOME
+WORKDIR $ZOPE_HOME
 #
 #HEALTHCHECK --interval=1m --timeout=5s --start-period=1m \
 #  CMD nc -z -w5 127.0.0.1 8080 || exit 1
 #
 #USER zope-www
 #
-#ENTRYPOINT ["/docker-entrypoint.sh"]
+# ENTRYPOINT ["./docker-entrypoint.sh"]
 #CMD ["start"]
