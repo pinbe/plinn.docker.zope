@@ -25,4 +25,4 @@ jobs:
         with:
           context: ./zope
           push: true
-          tags: pinbe/plinn:latest
+          tags: ghcr.io/${{ github.repository }}:latest
