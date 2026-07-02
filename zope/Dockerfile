@@ -83,11 +83,11 @@ EXPOSE 8080
 EXPOSE 9080
 
 # ZEO
-VOLUME $ZOPE_HOME/zeo_instances/plinn/var
-VOLUME $ZOPE_HOME/zeo_instances/plinn/log
+VOLUME /opt/zope/zeo_instances/plinn/var
+VOLUME /opt/zope/zeo_instances/plinn/log
 
 # Zope
-VOLUME $ZOPE_HOME/zope_instances/plinn/log
+VOLUME /opt/zope/zope_instances/plinn/log
 
 WORKDIR $ZOPE_HOME
 
