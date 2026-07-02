@@ -23,6 +23,6 @@ jobs:
 
       - uses: docker/build-push-action@v7
         with:
-          context: .
+          context: ./zope
           push: true
           tags: pinbe/plinn:latest
