@@ -67,6 +67,7 @@ RUN wget https://github.com/pinbe/Plinn/releases/download/v0.9.2/build.tar.xz &&
 
 COPY src/zope.conf  \
      src/zeo.conf \
+     src/check-zeo-data.sh \
      src/install.sh $ZOPE_HOME/
 
 USER zope-www
